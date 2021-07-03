@@ -17,7 +17,10 @@ class test_game(unittest.TestCase):
                      [0, 0, 0, 0]]
 
         self.game.set_grid(example1)
+        print("move up")
+        self.game.show_grid()
         self.game.move_up()
+        self.game.show_grid()
         self.assertEqual(soultion1, self.game.get_grid())
 
     def test_move_down(self):
@@ -32,7 +35,10 @@ class test_game(unittest.TestCase):
                      [4, 4, 2, 4]]
 
         self.game.set_grid(example1)
+        print("move down")
+        self.game.show_grid()
         self.game.move_down()
+        self.game.show_grid()
         self.assertEqual(soultion1, self.game.get_grid())
 
     def test_move_left(self):
@@ -46,7 +52,10 @@ class test_game(unittest.TestCase):
                      [4, 2, 0, 0],
                      [4, 4, 0, 0]]
         self.game.set_grid(example1)
+        print("move left")
+        self.game.show_grid()
         self.game.move_left()
+        self.game.show_grid()
         self.assertEqual(soultion1, self.game.get_grid())
 
     def test_move_right(self):
@@ -61,7 +70,10 @@ class test_game(unittest.TestCase):
                      [0, 0, 4, 4]]
 
         self.game.set_grid(example1)
+        print("move right")
+        self.game.show_grid()
         self.game.move_right()
+        self.game.show_grid()
         self.assertEqual(soultion1, self.game.get_grid())
 
     def test_invert(self):
@@ -75,7 +87,10 @@ class test_game(unittest.TestCase):
                      [2, 0, 0, 0],
                      [2, 0, 2, 4]]
         self.game.set_grid(example1)
+        print("invert")
+        self.game.show_grid()
         self.game.invert()
+        self.game.show_grid()
         self.assertEqual(soultion1, self.game.get_grid())
 
     def test_rotate_right(self):
