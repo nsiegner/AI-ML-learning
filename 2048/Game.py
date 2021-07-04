@@ -1,20 +1,21 @@
 import tkinter as tk
 import random as rnd
 import numpy as np
+from View import *
 class Game(object):
-
+    changed = False
 
     def __init__(self):
         self.grid = [[0]*4 for i in range(4)]
         self.add_tile_2()
         self.add_tile_2()
+        self.window = View()
 
         self.main_loop()
 
     def main_loop(self):
-        self.show_grid()
-        new_grid = self.grid
-
+        self.window.show_grid(self.grid)
+        self.changed = False
         x = input("which direction you want to go in:").lower()
         if x == "w":
             self.move_up()
@@ -26,8 +27,7 @@ class Game(object):
             self.move_right()
         else:
             pass
-
-        if self.is_full() != True and new_grid != self.grid:
+        if self.is_full() != True and self.changed == True:
             self.add_tile()
 
         if self.get_current_state() == "Not done jet":
@@ -69,18 +69,25 @@ class Game(object):
             self.add_tile_4()
 
     def push_up(self):
-        for i in range(1, 4):
+        for i in range(4):
             for j in range(4):
                 if self.grid[i][j] != 0:
                     if self.grid[0][j] == 0:
                         self.grid[0][j] = self.grid[i][j]
                         self.grid[i][j] = 0
+                        if i != 0:
+                            self.changed = True
                     elif self.grid[1][j] == 0:
                         self.grid[1][j] = self.grid[i][j]
                         self.grid[i][j] = 0
+                        if i != 1:
+                            self.changed = True
                     elif self.grid[2][j] == 0:
                         self.grid[2][j] = self.grid[i][j]
                         self.grid[i][j] = 0
+                        if i != 2:
+                            self.changed = True
+
 
     def merge(self):
             for i in range(3):
@@ -130,10 +137,12 @@ class Game(object):
 
 
     def show_grid(self):
-        print("\n")
+        '''print("\n")
         for i in range(4):
             print(self.grid[i][0], self.grid[i][1], self.grid[i][2], self.grid[i][3])
-        print("\n")
+        print("\n")'''
+        pass
+
 
     def get_current_state(self):
         for i in range(4):
