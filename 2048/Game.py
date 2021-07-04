@@ -4,7 +4,6 @@ import numpy as np
 from View import *
 class Game(object):
     changed = False
-
     def __init__(self):
         self.grid = [[0]*4 for i in range(4)]
         self.add_tile_2()
@@ -15,6 +14,7 @@ class Game(object):
 
     def main_loop(self):
         self.window.show_grid(self.grid)
+        new_grid = self.grid
         self.changed = False
         x = input("which direction you want to go in:").lower()
         if x == "w":
@@ -69,7 +69,7 @@ class Game(object):
             self.add_tile_4()
 
     def push_up(self):
-        for i in range(4):
+        for i in range(1, 4):
             for j in range(4):
                 if self.grid[i][j] != 0:
                     if self.grid[0][j] == 0:
