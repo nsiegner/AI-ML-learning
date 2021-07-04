@@ -136,13 +136,6 @@ class Game(object):
         return True
 
 
-    def show_grid(self):
-        '''print("\n")
-        for i in range(4):
-            print(self.grid[i][0], self.grid[i][1], self.grid[i][2], self.grid[i][3])
-        print("\n")'''
-        pass
-
 
     def get_current_state(self):
         for i in range(4):
