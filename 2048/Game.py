@@ -4,7 +4,9 @@ import numpy as np
 from View import *
 class Game(object):
     changed = False
+    score = 0
     def __init__(self):
+        self.score = 0
         self.grid = [[0]*4 for i in range(4)]
         self.add_tile_2()
         self.add_tile_2()
@@ -99,6 +101,7 @@ class Game(object):
                     if self.grid[i + 1][j] == self.grid[i][j] and self.grid[i][j] != None:
                         self.grid[i][j] = self.grid[i][j]*2
                         self.grid[i + 1][j] = 0
+                        self.change_score(self.grid[i][j])
 
     #invert the grid
     def invert(self):
@@ -168,6 +171,9 @@ class Game(object):
 
         return "Game Over"
 
-    
+    # keeping count of the score of the game
+    def change_score(self, value):
+        self.score += value*2
+
 if __name__ == "__main__":
     game = Game()
