@@ -12,6 +12,7 @@ class Game(object):
 
         self.main_loop()
 
+    #defining the main loop which is run everytime the player trys to make a move
     def main_loop(self):
         self.window.show_grid(self.grid)
         new_grid = self.grid
@@ -38,13 +39,15 @@ class Game(object):
             print("Game Over")
 
 
-
+    #an oportunity to change the grid manually
     def set_grid(self, grid):
         self.grid = grid
 
+    #returns the current grid
     def get_grid(self):
         return self.grid
 
+    # the methods to add tiles to the grid
     def add_tile(self):
         i = rnd.randint(0, 10)
         if i == 0 or i == 1:
@@ -68,6 +71,7 @@ class Game(object):
         else:
             self.add_tile_4()
 
+    # moving each tile in the grid up, starting from the top left to the bottom right corner
     def push_up(self):
         for i in range(1, 4):
             for j in range(4):
@@ -88,7 +92,7 @@ class Game(object):
                         if i != 2:
                             self.changed = True
 
-
+    # merge tiles if two tiles of the same value are below each other
     def merge(self):
             for i in range(3):
                 for j in range(4):
@@ -96,17 +100,20 @@ class Game(object):
                         self.grid[i][j] = self.grid[i][j]*2
                         self.grid[i + 1][j] = 0
 
+    #invert the grid
     def invert(self):
         self.grid.reverse()
 
+    # rotate the grid by 90 degrees to the right
     def rotate_right(self):
         a = np.rot90(self.grid, 3)
         self.grid = a.tolist()
-
+    # rotate the grid by 90 degrees to the left
     def rotate_left(self):
         a = np.rot90(self.grid)
         self.grid = a.tolist()
 
+    # move methods
     def move_up(self):
         self.push_up()
         self.merge()
@@ -127,6 +134,7 @@ class Game(object):
         self.move_up()
         self.rotate_right()
 
+    #check if there are any spots in the grid with no tile on them
     def is_full(self):
         for i in range(4):
             for j in range(4):
@@ -136,7 +144,7 @@ class Game(object):
         return True
 
 
-
+    # checks if the game is won, lost or not done jet
     def get_current_state(self):
         for i in range(4):
             for j in range(4):
@@ -160,5 +168,6 @@ class Game(object):
 
         return "Game Over"
 
+    
 if __name__ == "__main__":
     game = Game()
