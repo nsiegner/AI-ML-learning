@@ -2,43 +2,18 @@ import tkinter as tk
 import random as rnd
 import numpy as np
 from View import *
-class Game(object):
+class Game_model(object):
     changed = False
     score = 0
-    def __init__(self):
+    def __init__(self, grid=None):
         self.score = 0
         self.grid = [[0]*4 for i in range(4)]
         self.add_tile_2()
         self.add_tile_2()
-        self.window = View()
+        if grid != None:
+            self.grid = grid
 
-        self.main_loop()
 
-    #defining the main loop which is run everytime the player trys to make a move
-    def main_loop(self):
-        self.window.show_grid(self.grid)
-        new_grid = self.grid
-        self.changed = False
-        x = input("which direction you want to go in:").lower()
-        if x == "w":
-            self.move_up()
-        elif x == "s":
-            self.move_down()
-        elif x == "a":
-            self.move_left()
-        elif x == "d":
-            self.move_right()
-        else:
-            pass
-        if self.is_full() != True and self.changed == True:
-            self.add_tile()
-
-        if self.get_current_state() == "Not done jet":
-            self.main_loop()
-        elif self.get_current_state() == "Won":
-            print("You have won")
-        elif self.get_current_state() == "Game Over":
-            print("Game Over")
 
 
     #an oportunity to change the grid manually
@@ -101,7 +76,7 @@ class Game(object):
                     if self.grid[i + 1][j] == self.grid[i][j] and self.grid[i][j] != None:
                         self.grid[i][j] = self.grid[i][j]*2
                         self.grid[i + 1][j] = 0
-                        self.change_score(self.grid[i][j])
+                        self.set_score(self.grid[i][j])
 
     #invert the grid
     def invert(self):
@@ -172,8 +147,8 @@ class Game(object):
         return "Game Over"
 
     # keeping count of the score of the game
-    def change_score(self, value):
+    def set_score(self, value):
         self.score += value*2
 
-if __name__ == "__main__":
-    game = Game()
+    def get_score(self):
+        return self.score
