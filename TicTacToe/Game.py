@@ -1,7 +1,5 @@
-from scene import *
-from scene_drawing import *
 import turtle
-
+import time
 class Game:
 
 	'''
@@ -40,31 +38,36 @@ class Game:
 		self.moved = 1
 
 	def main_loop(self):
-		print(self.check_status())
 		while self.check_status() == "not done jet":
 			print(self.get_grid())
 			self.move(int(input("X")), int(input("Y")))
+		if self.check_status() == "player1 won":
+			self.draw_win("player1")
+		elif self.check_status() == "player2 won":
+			self.draw_win("player2")
+		elif self.check_status() == "draw":
+			self.draw_win("draw")
 
-
-	def move(self, pos_x, pos_y):
-		#checking if the move is inside the board
-		if pos_x > 0 and pos_y < 4 and pos_y > 0 and pos_y < 4:
-			#checking if the position of the move is empty
-			if self.grid[pos_y][pos_x] == 0:
-				self.grid[pos_y][pos_x] = self.moved
-				#setting the turn to the other player
-				if self.moved == 1:
-					self.draw_cross(pos_x, pos_y)
-					self.moved = -1
-				elif self.moved == -1:
-					self.draw_circle(pos_x, pos_y)
-					self.moved = 1
+	def move(self, pos_x=-1, pos_y=-1):
+		if pos_x != -1 and pos_y != -1:
+			#checking if the move is inside the board
+			if pos_x > 0 and pos_y < 4 and pos_y > 0 and pos_y < 4:
+				#checking if the position of the move is empty
+				if self.grid[pos_y][pos_x] == 0:
+					self.grid[pos_y][pos_x] = self.moved
+					#setting the turn to the other player
+					if self.moved == 1:
+						self.draw_cross(pos_x, pos_y)
+						self.moved = -1
+					elif self.moved == -1:
+						self.draw_circle(pos_x, pos_y)
+						self.moved = 1
+				else:
+					return "position already taken"
 			else:
-				return "position already taken"
-		else:
-			return "position out of bounds"
+				return "position out of bounds"
 
-		self.update()
+			self.update()
 
 
 	def update(self):
@@ -83,8 +86,7 @@ class Game:
 						return "player1 won"
 					elif self.grid[y][x] == -3:
 						return "player2 won"
-					else:
-						return "not done jet"
+			return "not done jet"
 		else:
 			for y in range(5):
 				for x in range(5):
@@ -92,8 +94,7 @@ class Game:
 						return "player1 won"
 					elif self.grid[y][x] == -3:
 						return "player2 won"
-					else:
-						return "draw"
+			return "draw"
 
 	def is_space(self):
 		for y in range(1, 4):
@@ -175,20 +176,154 @@ class Game:
 
 		self.bob.penup()
 		self.bob.goto(x, y)
-		self.bob.setheading(180)
+		self.bob.setheading(0)
 		self.bob.pendown()
 		self.bob.circle(80)
 
 
 	def draw_win(self, player):
-		self.bob.clear()
-		self.bob.penup()
-		self.bob.goto(-300, 300)
-		self.bob.pendown()
-		self.bob.goto(-300, 100)
-		self.bob.penup()
-		self.bob.goto(-300, 300)
-		self.bob.pendown()
+		if player != "draw":
+			self.bob.clear()
+			self.bob.penup()
+			#P
+			self.bob.goto(-300, 100)
+			self.bob.pendown()
+			self.bob.goto(-300, 300)
+			self.bob.goto(-250, 300)
+			self.bob.goto(-250, 200)
+			self.bob.goto(-300, 200)
+			self.bob.penup()
+			#L
+			self.bob.goto(-200, 300)
+			self.bob.pendown()
+			self.bob.goto(-200, 100)
+			self.bob.goto(-150, 100)
+			self.bob.penup()
+			#A
+			self.bob.goto(-100, 300)
+			self.bob.pendown()
+			self.bob.goto(-100, 100)
+			self.bob.goto(-100, 200)
+			self.bob.goto(-50, 200)
+			self.bob.goto(-50, 100)
+			self.bob.goto(-50, 300)
+			self.bob.goto(-100, 300)
+			self.bob.penup()
+			#Y
+			self.bob.goto(0, 300)
+			self.bob.pendown()
+			self.bob.goto(25, 200)
+			self.bob.goto(25, 100)
+			self.bob.goto(25, 200)
+			self.bob.goto(50, 300)
+			self.bob.penup()
+			#E
+			self.bob.goto(150, 300)
+			self.bob.pendown()
+			self.bob.goto(100, 300)
+			self.bob.goto(100, 200)
+			self.bob.goto(150, 200)
+			self.bob.goto(100, 200)
+			self.bob.goto(100, 100)
+			self.bob.goto(150, 100)
+			self.bob.penup()
+			#R
+			self.bob.goto(200, 100)
+			self.bob.pendown()
+			self.bob.goto(200, 300)
+			self.bob.goto(250, 300)
+			self.bob.goto(250, 250)
+			self.bob.goto(200, 200)
+			self.bob.goto(250, 100)
+			self.bob.penup()
+			if player == "player1":
+				#1
+				self.bob.goto(-50, 0)
+				self.bob.pendown()
+				self.bob.goto(0, 50)
+				self.bob.goto(0, -50)
+				self.bob.goto(25, -50)
+				self.bob.goto(-25, -50)
+				self.bob.penup()
+
+			elif player == "player2":
+				#2
+				self.bob.goto(-50, 50)
+				self.bob.pendown()
+				self.bob.goto(50, 50)
+				self.bob.goto(50, 0)
+				self.bob.goto(-50, 0)
+				self.bob.goto(-50, -50)
+				self.bob.goto(50, -50)
+				self.bob.penup()
+
+			#W
+			self.bob.goto(-250, -100)
+			self.bob.pendown()
+			self.bob.goto(-250, -300)
+			self.bob.goto(-200, -300)
+			self.bob.goto(-200, -150)
+			self.bob.goto(-200, -300)
+			self.bob.goto(-150, -300)
+			self.bob.goto(-150, -100)
+			self.bob.penup()
+			#O
+			self.bob.goto(-100, -100)
+			self.bob.pendown()
+			self.bob.goto(0, -100)
+			self.bob.goto(0, -300)
+			self.bob.goto(-100, -300)
+			self.bob.goto(-100, -100)
+			self.bob.penup()
+			#N
+			self.bob.goto(50, -300)
+			self.bob.pendown()
+			self.bob.goto(50, -100)
+			self.bob.goto(150, -300)
+			self.bob.goto(150, -100)
+
+		elif player == "draw":
+			self.bob.clear()
+			self.bob.penup()
+			#D
+			self.bob.goto(-300, 200)
+			self.bob.pendown()
+			self.bob.goto(-300, -200)
+			self.bob.goto(-250, -200)
+			self.bob.goto(-200, -100)
+			self.bob.goto(-200, 100)
+			self.bob.goto(-250, 200)
+			self.bob.goto(-300, 200)
+			self.bob.penup()
+			#R
+			self.bob.goto(-150, -200)
+			self.bob.pendown()
+			self.bob.goto(-150, 200)
+			self.bob.goto(-50, 200)
+			self.bob.goto(-50, 100)
+			self.bob.goto(-150,  0)
+			self.bob.goto(-50, -200)
+			self.bob.penup()
+			#A
+			self.bob.goto(0, -200)
+			self.bob.pendown()
+			self.bob.goto(0, 200)
+			self.bob.goto(100, 200)
+			self.bob.goto(100, -200)
+			self.bob.goto(100, 0)
+			self.bob.goto(0, 0)
+			self.bob.penup()
+			#W
+			self.bob.goto(150, 200)
+			self.bob.pendown()
+			self.bob.goto(150, -200)
+			self.bob.goto(225, -200)
+			self.bob.goto(225, 50)
+			self.bob.goto(225, -200)
+			self.bob.goto(300, -200)
+			self.bob.goto(300, 200)
+
+		time.sleep(20)
 
 
 if __name__ == "__main__":
